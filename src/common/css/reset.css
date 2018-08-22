@@ -1,0 +1,79 @@
+/*reset.css*/
+html,body {
+    color: #666;
+    background: #222;
+    font-family: "微软雅黑";
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
+.clearFix::after{
+    content: "";
+    display: block;
+    clear: both;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+a,
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+select,
+p,
+blockquote,
+th,
+td {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    border: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+fieldset,
+img {
+    border: 0;
+    display: black;
+}
+
+del,ins,a{
+    text-decoration: none;
+}
+
+ul,ol,li {
+    list-style: none;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+section, nav, aside,article,header, footer {
+    display: block;
+}
