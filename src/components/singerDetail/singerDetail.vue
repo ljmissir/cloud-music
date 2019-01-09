@@ -6,7 +6,7 @@
 </template>
 
 <script type='text/ecmascript-6'>
-    import {getSingerDetail} from 'api/singer'
+    import {getSingerDetail, getSongVkey} from 'api/singer'
     import {ERR_OK} from 'api/config'
     import {mapGetters} from 'vuex'
     import {createSong} from 'common/js/songs'
@@ -50,9 +50,12 @@
                 let ret = []
                 list.forEach((item) => {
                     let {musicData} = item
-                    if (musicData.songid && musicData.albumid) {
-                        ret.push(createSong(musicData))
-                    }
+                    getSongVkey(musicData.songmid).then((res) => {
+                        const vkey = res.data.items[0].vkey
+                        if (musicData.songid && musicData.albummid) {
+                            ret.push(createSong(musicData, vkey))
+                        }
+                    })
                 })
                 return ret
             }

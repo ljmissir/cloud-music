@@ -10,6 +10,7 @@
     import {mapGetters} from 'vuex'
     import {getRankListSongs} from 'api/rank'
     import {ERR_OK} from 'api/config'
+    import {getSongVkey} from 'api/singer'
     import {createSong} from 'common/js/songs'
 
     export default {
@@ -52,9 +53,14 @@
             _mapResolveList (list) {
                 let ret = []
                 list.forEach((item) => {
-                    let {data} = item
+                    let musicData = item.data
                     if (item) {
-                        ret.push(createSong(data))
+                        getSongVkey(musicData.songmid).then((res) => {
+                            const vkey = res.data.items[0].vkey
+                            if (musicData.songid && musicData.albummid) {
+                                ret.push(createSong(musicData, vkey))
+                            }
+                        })
                     }
                 })
                 return ret

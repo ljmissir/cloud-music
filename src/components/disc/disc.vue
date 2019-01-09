@@ -7,6 +7,7 @@
 
 <script type='text/ecmascript-6'>
     import MusicList from 'components/musicList/musicList'
+    import {getSongVkey} from 'api/singer'
     import {getDiscSongList} from 'api/recommend'
     import {ERR_OK} from 'api/config'
     import {mapGetters} from 'vuex'
@@ -48,9 +49,13 @@
             _mapDiscSongList (list) {
                 let ret = []
                 list.forEach((item) => {
-                    if (item.albumid && item.songmid) {
-                        ret.push(createSong(item))
-                    }
+                    let musicData = item
+                    getSongVkey(musicData.songmid).then((res) => {
+                        const vkey = res.data.items[0].vkey
+                        if (musicData.songid && musicData.albummid) {
+                            ret.push(createSong(musicData, vkey))
+                        }
+                    })
                 })
                 return ret
             }

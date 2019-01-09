@@ -22,6 +22,7 @@
     import {getHotSongList} from 'api/search'
     import {ERR_OK} from 'api/config'
     import Loading from 'base/loading/loading'
+    import {getSongVkey} from 'api/singer'
     import Scroll from 'base/scroll/scroll'
     import Singer from 'common/js/singer'
     import {mapMutations, mapActions} from 'vuex'
@@ -92,6 +93,7 @@
                 }
             },
             _resolveResult (data) {
+                console.log(data)
                 let ret = []
                 if (data.zhida && data.zhida.singerid) {
                     ret.push({...data.zhida, ...{type: TYPE_SINGER}})
@@ -103,10 +105,14 @@
             },
             _normalLizeData (list) {
                 let ret = []
-                list.forEach((musicData) => {
-                    if (musicData.songid && musicData.albumid) {
-                        ret.push(createSong(musicData))
-                    }
+                list.forEach((item) => {
+                    let {musicData} = item
+                    getSongVkey(musicData.songmid).then((res) => {
+                        const vkey = res.data.items[0].vkey;
+                        if (musicData.songid && musicData.albummid) {
+                            ret.push(createSong(musicData, vkey))
+                        }
+                    })
                 })
                 return ret
             },
