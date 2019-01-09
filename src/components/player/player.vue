@@ -328,15 +328,11 @@
             _getSongLyrics () {
                 const result = getSongLyrics(this.currentSong.mid)
                 result.then((res) => {
-                    if (typeof res === 'string') {
-                        var reg = /\w+\(({[^()]+})\)$/
-                        var matches = res.match(reg)
-                        if (matches) {
-                            res = JSON.parse(matches[1])
-                            if (res.retcode === ERR_OK) {
-                                this.lyrics = Base64.decode(res.lyric)
-                                this._getLyric(this.lyrics)
-                            }
+                    console.log(res, typeof res.lyric === 'string')
+                    if (typeof res.lyric === 'string') {
+                        if (res.retcode === ERR_OK) {
+                            this.lyrics = Base64.decode(res.lyric)
+                            this._getLyric(this.lyrics)
                         }
                     }
                 }).catch(() => {
